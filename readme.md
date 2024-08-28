@@ -4,7 +4,7 @@ Este es un proyecto de una aplicación Android que permite a los usuarios ingres
 
 ## Demo
 
-![Captura de pantalla de la aplicación]([https://example.com/your-image-url.png](https://i.ibb.co/5RbWVP8/Selecci-n-044.png))
+![Captura de pantalla de la aplicación](https://i.ibb.co/5RbWVP8/Selecci-n-044.png)
 
 ## Características
 
