@@ -2,6 +2,10 @@
 
 Este es un proyecto de una aplicación Android que permite a los usuarios ingresar un número atómico y obtener información detallada sobre el elemento químico correspondiente. La información se muestra en un formato tabular de dos columnas, haciendo uso de un `TableLayout`.
 
+## Demo
+
+![Captura de pantalla de la aplicación]([https://example.com/your-image-url.png](https://i.ibb.co/5RbWVP8/Selecci-n-044.png))
+
 ## Características
 
 - **Entrada de Usuario:** Permite ingresar un número atómico para buscar el elemento correspondiente.
