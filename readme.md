@@ -31,4 +31,4 @@ Este es un proyecto de una aplicación Android que permite a los usuarios ingres
 1. **Clonar el repositorio:**
 
    ```bash
-   git clone https://github.com/tu_usuario/tabla-periodica-android.git
+   git clone https://github.com/bi0punk/Android101
