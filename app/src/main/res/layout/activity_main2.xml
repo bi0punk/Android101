@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:background="#f0f0f0"
     android:padding="16dp">
-
-    <!-- Título de la aplicación -->
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
@@ -17,7 +15,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"/>
 
-    <!-- Descripción del campo de entrada -->
     <TextView
         android:id="@+id/numberInputLabel"
         android:layout_width="wrap_content"
@@ -29,7 +26,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"/>
 
-    <!-- Campo de entrada para el número -->
     <EditText
         android:id="@+id/numberInput"
         android:layout_width="300dp"
@@ -43,7 +39,18 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
 
-    <!-- Botón de enviar -->
+
+    <TextView
+        android:id="@+id/resultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#666666"
+        android:layout_below="@id/submitButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+
     <Button
         android:id="@+id/submitButton"
         android:layout_width="wrap_content"
@@ -56,35 +63,5 @@
         android:layout_below="@id/numberInput"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
-
-    <!-- Tabla para mostrar los resultados -->
-    <TableLayout
-        android:id="@+id/resultTable"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/submitButton"
-        android:layout_marginTop="20dp"
-        android:stretchColumns="1"
-        android:background="#ffffff"
-        android:padding="16dp">
-
-        <!-- Ejemplo de fila de la tabla -->
-        <TableRow>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Property"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#333333"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Value"
-                android:textSize="18sp"
-                android:textColor="#666666"/>
-        </TableRow>
-
-    </TableLayout>
 
 </RelativeLayout>

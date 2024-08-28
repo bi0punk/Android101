@@ -8,7 +8,7 @@
     </item>
     <item>
         <shape>
-            <solid android:color="#FFBB86FC"/> <!-- Color púrpura claro -->
+            <solid android:color="#FFBD86FC"/> <!-- Color púrpura claro -->
             <corners android:radius="8dp"/>
         </shape>
     </item>
