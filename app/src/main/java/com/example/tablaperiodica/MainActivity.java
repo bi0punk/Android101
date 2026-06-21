@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendRequest(String number) {
-        String url = "http://192.168.1.93:8000/elementos/" + number;
+        String url = "http://YOUR_SERVER_IP:8000/elementos/" + number;
 
         Request request = new Request.Builder()
                 .url(url)
