@@ -1,63 +1,98 @@
 # Tabla Periódica - Aplicación Android
 
+Aplicación Android (Java) que permite ingresar un número atómico y obtener información detallada del elemento químico correspondiente desde un backend remoto, mostrándola en un `TableLayout` de dos columnas.
+
 [![CI](https://github.com/bi0punk/Android101/actions/workflows/ci.yml/badge.svg)](https://github.com/bi0punk/Android101/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 ![Android](https://img.shields.io/badge/android-min%2023+-green.svg)
 
-Este es un proyecto de una aplicación Android que permite a los usuarios ingresar un número atómico y obtener información detallada sobre el elemento químico correspondiente. La información se muestra en un formato tabular de dos columnas, haciendo uso de un `TableLayout`.
+![Captura de pantalla de la aplicación](https://i.ibb.co/5RbWVP8/Selecci-n-044.png)
 
-## Tabla de contenidos
+## Contenido
 
 - [Características](#características)
+- [Arquitectura](#arquitectura)
 - [Stack](#stack)
-- [Requisitos](#requisitos)
-- [Instalación y Ejecución](#instalación-y-ejecución)
-- [Tests](#tests)
-- [CI](#ci)
-- [Limitaciones](#limitaciones)
+- [Estructura del repositorio](#estructura-del-repositorio)
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Tests / CI](#tests--ci)
+- [Roadmap](#roadmap)
 - [Licencia](#licencia)
-
-## Demo
-
-![Captura de pantalla de la aplicación](https://i.ibb.co/5RbWVP8/Selecci-n-044.png)
 
 ## Características
 
-- **Entrada de Usuario:** Permite ingresar un número atómico para buscar el elemento correspondiente.
-- **Solicitud HTTP:** Envía una solicitud HTTP a un servidor para obtener información sobre el elemento químico.
-- **Visualización de Datos:** Muestra la información recibida en una tabla con dos columnas: una para la propiedad y otra para su valor.
-- **Interfaz de Usuario:** UI simple y limpia con un diseño responsivo.
+- Entrada de un número atómico para buscar el elemento correspondiente.
+- Solicitud HTTP a un servidor para obtener la información del elemento químico.
+- Visualización de datos en una tabla de dos columnas (propiedad / valor) con `TableLayout`.
+- Interfaz sencilla con diseño responsivo (`RelativeLayout`).
 
-## Tecnologías Utilizadas
+## Arquitectura
 
-- **Lenguaje de Programación:** Java
-- **Framework de Red:** OkHttp para realizar solicitudes HTTP
-- **Diseño de UI:** XML con `RelativeLayout` y `TableLayout`
-- **Servidor Backend:** El servidor responde con datos en formato JSON
+```mermaid
+flowchart LR
+  A[MainActivity.java<br/>EditText número atómico] --> B[OkHttpClient<br/>GET /elementos/N]
+  B -->|HTTP| C[Backend remoto<br/>JSON]
+  C -->|parse JSONObject| D[TableLayout<br/>13 propiedades]
+  B -->|onFailure| E[Fila Error]
+  A -->|valida input vacío| E
+```
 
-## Requisitos
+Detalle del flujo: la app convierte el número ingresado en la URL `http://YOUR_SERVER_IP:8000/elementos/{N}`, procesa la respuesta JSON (name, symbol, atomic_number, mass, exact_mass, ionization, electron_affinity, electronegativity, covalent_radius, van_der_waals_radius, melting_point, boiling_point, family) y puebla la tabla; sin backend disponible muestra una fila de error.
 
-- **Android Studio:** Para desarrollar y ejecutar el proyecto.
-- **JDK:** Java Development Kit para compilar y ejecutar la aplicación.
-- **Dispositivo Android o Emulador:** Para probar la aplicación.
+## Stack
 
-## Instalación y Ejecución
+- **Lenguaje**: Java (source/target Java 8)
+- **Framework de red**: OkHttp 4.9.3
+- **Diseño de UI**: XML con `RelativeLayout` y `TableLayout`
+- **Backend**: servidor externo que responde JSON (`/elementos/{N}`)
+- **Build**: Gradle con version catalog (`gradle/libs.versions.toml`), minSdk 23 / targetSdk 34
+- **Testing**: JUnit (unit) + Espresso (instrumentado)
 
-1. **Clonar el repositorio:**
+## Estructura del repositorio
 
-   ```bash
-   git clone https://github.com/bi0punk/Android101
-   ```
+```
+Android101/
+├── build.gradle
+├── settings.gradle
+├── gradle.properties
+├── gradle/
+│   ├── libs.versions.toml
+│   └── wrapper/
+├── gradlew / gradlew.bat
+├── app/
+│   ├── build.gradle
+│   ├── proguard-rules.pro
+│   └── src/
+│       ├── main/
+│       │   ├── AndroidManifest.xml
+│       │   ├── java/com/example/tablaperiodica/MainActivity.java
+│       │   └── res/ (layouts, drawables, values, mipmap…)
+│       ├── test/java/.../ExampleUnitTest.java
+│       └── androidTest/java/.../ExampleInstrumentedTest.java
+└── .github/workflows/ci.yml
+```
 
-2. **Abrir en Android Studio** (o compilar desde CLI):
+## Instalación
 
-   ```bash
-   ./gradlew assembleDebug
-   ```
+Requisitos: Android Studio (o JDK en CLI), dispositivo Android o emulador.
 
-3. El APK debug queda en `app/build/outputs/apk/debug/`.
+```bash
+git clone https://github.com/bi0punk/Android101
+cd Android101
+```
 
-## Tests
+## Uso
+
+Abrir en Android Studio o compilar desde CLI:
+
+```bash
+./gradlew assembleDebug
+```
+
+El APK debug queda en `app/build/outputs/apk/debug/`. Antes de ejecutar, edita la URL del backend en `MainActivity.java` (`http://YOUR_SERVER_IP:8000/`).
+
+## Tests / CI
 
 ```bash
 ./gradlew test              # unit tests
@@ -66,21 +101,16 @@ Este es un proyecto de una aplicación Android que permite a los usuarios ingres
 
 Hay un test instrumentado de ejemplo en `app/src/androidTest/`.
 
-## CI
+CI: GitHub Actions (`.github/workflows/ci.yml`) con Temurin JDK 17 + `setup-android`: valida el wrapper Gradle, `./gradlew assembleDebug` y `./gradlew test`.
 
-GitHub Actions (`.github/workflows/ci.yml`):
+## Roadmap
 
-- Valida el gradle wrapper.
-- `./gradlew assembleDebug` (build del APK debug).
-- `./gradlew test` (unit tests).
+- [x] Búsqueda por número atómico con respuesta en tabla
+- [x] Build de APK debug en CI
+- [ ] Tests unitarios reales de la lógica de parseo
+- [ ] Selección de backend configurable (sin hardcode)
 
-Usa Temurin JDK 17 + `setup-android`.
-
-## Limitaciones
-
-- La app consume un servidor backend externo para los datos de elementos (ver `MainActivity.java`); sin backend no devuelve datos.
-- `minSdk 23`, `targetSdk 34`.
-- Sin tests unitarios reales (solo el instrumentado de ejemplo).
+Limitación: la app depende de un servidor backend externo para los datos; sin él no devuelve información.
 
 ## Licencia
 
